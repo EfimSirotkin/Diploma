@@ -9,7 +9,7 @@ public class Pupil {
     private int age;
     private char sex;
     private ArrayList<Grade> pupilGrades;
-    private Class pupilClass;
+    private SchoolClass pupilClass;
 
     public Pupil(String fullName, String mail, int age, char sex) {
         this.fullName = fullName;
@@ -17,7 +17,7 @@ public class Pupil {
         this.age = age;
         this.sex = sex;
         pupilGrades = new ArrayList<>(5);
-        pupilClass = new Class();
+        pupilClass = new SchoolClass();
     }
 
     public void setPupilGrades(ArrayList<Grade> pupilGrades) {
@@ -28,11 +28,11 @@ public class Pupil {
         return pupilGrades;
     }
 
-    public Class getPupilClass() {
+    public SchoolClass getPupilClass() {
         return pupilClass;
     }
 
-    public void setPupilClass(Class pupilClass) {
+    public void setPupilClass(SchoolClass pupilClass) {
         this.pupilClass = pupilClass;
     }
 

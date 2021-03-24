@@ -20,6 +20,9 @@ public class Teacher {
         this.qualification = qualification;
     }
 
+    public Teacher(String full_name, String mail, int age, int sex, String qualification) {
+    }
+
     public ArrayList<Subject> getSubjects() {
         return subjects;
     }

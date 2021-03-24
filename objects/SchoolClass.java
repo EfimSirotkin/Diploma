@@ -1,17 +1,20 @@
 package sample.objects;
 
-public class Class {
+public class SchoolClass {
     private int number;
     private char letter;
     private int numberOfPupils;
 
-    public Class(int number, char letter, int numberOfPupils) {
+    public SchoolClass(int number, char letter, int numberOfPupils) {
         this.number = number;
         this.letter = letter;
         this.numberOfPupils = numberOfPupils;
     }
 
-    public Class() {
+    public SchoolClass() {
+    }
+
+    public SchoolClass(int class_number, String class_letter, int number_of_pupils) {
     }
 
     public int getNumber() {
