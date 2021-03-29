@@ -24,7 +24,9 @@ CREATE TABLE public.classes
         ArrayList<SchoolClass> classes = new ArrayList<SchoolClass>(5);
         ResultSet rs = DatabaseManipulator.generateSelectStatement("classes", "*");
         while (rs.next()) {
-            classes.add(new SchoolClass(rs.getInt("class_number"), rs.getString("class_letter"), rs.getInt("number_of_pupils")));
+            classes.add(new SchoolClass(rs.getInt("class_number"),
+                                        rs.getString("class_letter"),
+                                        rs.getInt("number_of_pupils")));
         }
         return classes;
     }
@@ -72,7 +74,22 @@ CREATE TABLE public.classes
             ResultSet rs = DatabaseManipulator.generateSelectStatement("teachers", "*");
 
             while (rs.next()) {
-                teachers.add(new Teacher(rs.getString("full_name"),rs.getString("mail"), rs.getInt("age"), rs.getInt("sex"), rs.getString("qualification")));
+                ArrayList<Subject> teacherSubjects = new ArrayList<>(5);
+
+                int teacher_id = rs.getInt("teacher_id");
+                ResultSet teacherSubjectsRS = DatabaseManipulator.generateSubjectRetrievalQuery(teacher_id);
+
+                while(teacherSubjectsRS.next()) {
+                    teacherSubjects.add(new Subject(teacherSubjectsRS.getString("subjects_name")));
+                }
+
+                teachers.add(new Teacher(rs.getString("full_name"),
+                                         rs.getString("mail"),
+                                         rs.getInt("age"),
+                                         rs.getInt("sex"),
+                                         rs.getString("qualification"),
+                                         teacherSubjects));
+
             }
         } catch (SQLException e) {
             System.out.println("Looks like something is wrong in teacher's retrieval");
@@ -114,12 +131,28 @@ CREATE TABLE public.classes
             while(pupilsResultSet.next()) {
                 ArrayList<Grade> pupilGrades = new ArrayList<Grade>(5);
                 int pupilID = pupilsResultSet.getInt("pupil_id");
-                ResultSet pupilGradesRS = DatabaseManipulator.generateSelectStatement("grades", "");
+                ResultSet pupilGradesRS = DatabaseManipulator.generateSelectEqualStatement("grades",
+                        "*", "pupil_id", String.valueOf(pupilID));
 
+                while(pupilGradesRS.next()) {
+                    pupilGrades.add(new Grade(pupilGradesRS.getString("datetime_id"),
+                                              pupilGradesRS.getInt("grade_value")));
+                }
+
+                pupils.add(new Pupil(pupilsResultSet.getString("full_name"),
+                                     pupilsResultSet.getString("mail"),
+                                     pupilsResultSet.getInt("age"),
+                                     (char) pupilsResultSet.getInt("sex"),
+                                     pupilGrades));
 
             }
+        } catch(SQLException e) {
+            System.out.println("Looks like something is wrong with grades or pupils tables. Check that!");
         }
+        return pupils;
     }
+
+
 }
 
 

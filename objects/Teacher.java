@@ -7,7 +7,7 @@ public class Teacher {
     private String fullName;
     private String mail;
     private int age;
-    private char sex;
+    private int sex;
     private String qualification;
     private ArrayList<Subject> subjects;
 
@@ -18,6 +18,15 @@ public class Teacher {
         this.age = age;
         this.sex = sex;
         this.qualification = qualification;
+    }
+
+    public Teacher(String fullName, String mail, int age, int sex, String qualification, ArrayList<Subject> subjects) {
+        this.fullName = fullName;
+        this.mail = mail;
+        this.age = age;
+        this.sex = sex;
+        this.qualification = qualification;
+        this.subjects = subjects;
     }
 
     public Teacher(String full_name, String mail, int age, int sex, String qualification) {
@@ -55,7 +64,7 @@ public class Teacher {
         this.age = age;
     }
 
-    public char getSex() {
+    public int getSex() {
         return sex;
     }
 

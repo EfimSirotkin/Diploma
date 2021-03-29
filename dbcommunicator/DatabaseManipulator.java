@@ -31,6 +31,16 @@ public final class DatabaseManipulator {
         return rs;
     }
 
+    public static ResultSet generateSubjectRetrievalQuery(int teacherID) throws SQLException {
+        String query = "SELECT subjects.subject_name FROM teachers " +
+                "LEFT JOIN teach_subjects ON teachers.teacher_id = teach_subject.teacher_id " +
+                "LEFT JOIN subjects ON teach_subject.subject_id = subjects.subject_id" +
+                "WHERE teachers.teacher_id = " + teacherID;
+        Statement stmt = DatabaseConnection.getInstance().getConnection().createStatement();
+        ResultSet rs = stmt.executeQuery(query);
+        stmt.close();
+        return rs;
+    }
 
 
 }

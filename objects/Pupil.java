@@ -11,6 +11,15 @@ public class Pupil {
     private ArrayList<Grade> pupilGrades;
     private SchoolClass pupilClass;
 
+    public Pupil(String fullName, String mail, int age, char sex, ArrayList<Grade> pupilGrades, SchoolClass pupilClass) {
+        this.fullName = fullName;
+        this.mail = mail;
+        this.age = age;
+        this.sex = sex;
+        this.pupilGrades = pupilGrades;
+        this.pupilClass = pupilClass;
+    }
+
     public Pupil(String fullName, String mail, int age, char sex) {
         this.fullName = fullName;
         this.mail = mail;
