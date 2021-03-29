@@ -2,8 +2,10 @@ package sample.dbcommunicator;
 
 import sample.objects.*;
 
+import javax.xml.crypto.Data;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 
@@ -22,12 +24,16 @@ CREATE TABLE public.classes
 
     public static ArrayList<SchoolClass> retrieveClasses() throws SQLException {
         ArrayList<SchoolClass> classes = new ArrayList<SchoolClass>(5);
-        ResultSet rs = DatabaseManipulator.generateSelectStatement("classes", "*");
+        DatabaseConnection databaseConnection = DatabaseConnection.getInstance();
+        Statement stmt = DatabaseConnection.getInstance().getConnection().createStatement();
+        String query = DatabaseManipulator.generateSelectStatement("classes", "*");
+        ResultSet rs = stmt.executeQuery(query);
         while (rs.next()) {
             classes.add(new SchoolClass(rs.getInt("class_number"),
-                                        rs.getString("class_letter"),
-                                        rs.getInt("number_of_pupils")));
+                    rs.getString("class_letter"),
+                    rs.getInt("number_of_pupils")));
         }
+        stmt.close();
         return classes;
     }
 
@@ -43,7 +49,10 @@ CREATE TABLE public.classes
     public static ArrayList<Subject> retrieveSubjects() throws SQLException {
         ArrayList<Subject> subjects = new ArrayList<Subject>(5);
         try {
-            ResultSet rs = DatabaseManipulator.generateSelectStatement("subjects", "subject_name");
+            DatabaseConnection databaseConnection = DatabaseConnection.getInstance();
+            Statement stmt = DatabaseConnection.getInstance().getConnection().createStatement();
+            String query = DatabaseManipulator.generateSelectStatement("subjects", "subject_name");
+            ResultSet rs = stmt.executeQuery(query);
 
             while (rs.next()) {
                 subjects.add(new Subject(rs.getString("subject_name")));
@@ -70,30 +79,35 @@ CREATE TABLE public.classes
 
     public static ArrayList<Teacher> retrieveTeachers() throws SQLException {
         ArrayList<Teacher> teachers = new ArrayList<Teacher>(5);
+        DatabaseConnection databaseConnection = DatabaseConnection.getInstance();
+        Statement stmt = DatabaseConnection.getInstance().getConnection().createStatement();
+        Statement subjectsQuerystmt = DatabaseConnection.getInstance().getConnection().createStatement();
         try {
-            ResultSet rs = DatabaseManipulator.generateSelectStatement("teachers", "*");
+            String query = DatabaseManipulator.generateSelectStatement("teachers", "*");
+            ResultSet rs = stmt.executeQuery(query);
 
             while (rs.next()) {
                 ArrayList<Subject> teacherSubjects = new ArrayList<>(5);
 
                 int teacher_id = rs.getInt("teacher_id");
-                ResultSet teacherSubjectsRS = DatabaseManipulator.generateSubjectRetrievalQuery(teacher_id);
-
-                while(teacherSubjectsRS.next()) {
-                    teacherSubjects.add(new Subject(teacherSubjectsRS.getString("subjects_name")));
+                String subjectQuery = DatabaseManipulator.generateSubjectRetrievalQuery(teacher_id);
+                ResultSet subjectQueryRS = subjectsQuerystmt.executeQuery(subjectQuery);
+                while (subjectQueryRS.next()) {
+                    teacherSubjects.add(new Subject(subjectQueryRS.getString("subject_name")));
                 }
 
                 teachers.add(new Teacher(rs.getString("full_name"),
-                                         rs.getString("mail"),
-                                         rs.getInt("age"),
-                                         rs.getInt("sex"),
-                                         rs.getString("qualification"),
-                                         teacherSubjects));
+                        rs.getString("mail"),
+                        rs.getInt("age"),
+                        rs.getInt("sex"),
+                        rs.getString("qualification"),
+                        teacherSubjects));
 
             }
         } catch (SQLException e) {
             System.out.println("Looks like something is wrong in teacher's retrieval");
         }
+        stmt.close();
         return teachers;
     }
 
@@ -125,28 +139,45 @@ CREATE TABLE public.classes
     public static ArrayList<Pupil> retrievePupils() throws SQLException {
         ArrayList<Pupil> pupils = new ArrayList<Pupil>(5);
         try {
+            Statement pupilsStmt = DatabaseConnection.getInstance().getConnection().createStatement();
+            String pupilsQuery = DatabaseManipulator.generateSelectStatement("pupils", "*");
+            ResultSet pupilsResultSet = pupilsStmt.executeQuery(pupilsQuery);
 
-            ResultSet pupilsResultSet = DatabaseManipulator.generateSelectStatement("pupils", "*");
-
-            while(pupilsResultSet.next()) {
+            while (pupilsResultSet.next()) {
                 ArrayList<Grade> pupilGrades = new ArrayList<Grade>(5);
                 int pupilID = pupilsResultSet.getInt("pupil_id");
-                ResultSet pupilGradesRS = DatabaseManipulator.generateSelectEqualStatement("grades",
+                Statement pupilGradesStmt = DatabaseConnection.getInstance().getConnection().createStatement();
+                String pupilGradesQuery = DatabaseManipulator.generateSelectEqualStatement("grades",
                         "*", "pupil_id", String.valueOf(pupilID));
+                ResultSet pupilGradesRS = pupilGradesStmt.executeQuery(pupilGradesQuery);
 
-                while(pupilGradesRS.next()) {
+
+                while (pupilGradesRS.next()) {
                     pupilGrades.add(new Grade(pupilGradesRS.getString("datetime_id"),
-                                              pupilGradesRS.getInt("grade_value")));
+                            pupilGradesRS.getInt("grade_value")));
+                }
+
+
+                int class_id = pupilsResultSet.getInt("class_id");
+                Statement pupilClassStmt = DatabaseConnection.getInstance().getConnection().createStatement();
+                String pupilClassQuery = DatabaseManipulator.generateSelectEqualStatement("classes", "*", "class_id", String.valueOf(class_id));
+                ResultSet pupilClassRS = pupilClassStmt.executeQuery(pupilClassQuery);
+                SchoolClass schoolClass = null;
+                while (pupilClassRS.next()) {
+                    schoolClass = new SchoolClass(pupilClassRS.getInt("class_number"),
+                                                  pupilClassRS.getString("class_letter"),
+                                                  pupilClassRS.getInt("number_of_pupils"));
                 }
 
                 pupils.add(new Pupil(pupilsResultSet.getString("full_name"),
-                                     pupilsResultSet.getString("mail"),
-                                     pupilsResultSet.getInt("age"),
-                                     (char) pupilsResultSet.getInt("sex"),
-                                     pupilGrades));
+                        pupilsResultSet.getString("mail"),
+                        pupilsResultSet.getInt("age"),
+                        (char) pupilsResultSet.getInt("sex"),
+                        pupilGrades,
+                        schoolClass));
 
             }
-        } catch(SQLException e) {
+        } catch (SQLException e) {
             System.out.println("Looks like something is wrong with grades or pupils tables. Check that!");
         }
         return pupils;

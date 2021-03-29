@@ -20,10 +20,25 @@ public final class DatabaseConnection {
         this.password = password;
     }
 
-    public static DatabaseConnection getInstance(Connection connection, String username, String password)
+    public static DatabaseConnection getInstance(String url, String username, String password)
     {
+
         if(instance == null)
         {
+            Connection connection = null;
+            try {
+                Class.forName("org.postgresql.Driver");
+                connection = DriverManager.getConnection(url, username, password);
+
+            } catch(ClassNotFoundException e)
+            {
+                System.out.println("Cannot load specified class!");
+            }
+            catch(SQLException e)
+            {
+                System.out.println("Looks like something is wrong with the database specified");
+            }
+
             instance = new DatabaseConnection(connection,username,password);
         }
         return instance;
