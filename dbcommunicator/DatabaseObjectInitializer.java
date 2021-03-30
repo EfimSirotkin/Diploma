@@ -99,7 +99,7 @@ CREATE TABLE public.classes
                 teachers.add(new Teacher(rs.getString("full_name"),
                         rs.getString("mail"),
                         rs.getInt("age"),
-                        rs.getInt("sex"),
+                        (char)rs.getInt("sex"),
                         rs.getString("qualification"),
                         teacherSubjects));
 
@@ -165,8 +165,8 @@ CREATE TABLE public.classes
                 SchoolClass schoolClass = null;
                 while (pupilClassRS.next()) {
                     schoolClass = new SchoolClass(pupilClassRS.getInt("class_number"),
-                                                  pupilClassRS.getString("class_letter"),
-                                                  pupilClassRS.getInt("number_of_pupils"));
+                            pupilClassRS.getString("class_letter"),
+                            pupilClassRS.getInt("number_of_pupils"));
                 }
 
                 pupils.add(new Pupil(pupilsResultSet.getString("full_name"),

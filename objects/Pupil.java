@@ -2,31 +2,15 @@ package sample.objects;
 
 import java.util.ArrayList;
 
-public class Pupil {
+public class Pupil extends Person{
 
-    private String fullName;
-    private String mail;
-    private int age;
-    private char sex;
     private ArrayList<Grade> pupilGrades;
     private SchoolClass pupilClass;
 
     public Pupil(String fullName, String mail, int age, char sex, ArrayList<Grade> pupilGrades, SchoolClass pupilClass) {
-        this.fullName = fullName;
-        this.mail = mail;
-        this.age = age;
-        this.sex = sex;
+        super(fullName,mail,age,sex);
         this.pupilGrades = pupilGrades;
         this.pupilClass = pupilClass;
-    }
-
-    public Pupil(String fullName, String mail, int age, char sex) {
-        this.fullName = fullName;
-        this.mail = mail;
-        this.age = age;
-        this.sex = sex;
-        pupilGrades = new ArrayList<>(5);
-        pupilClass = new SchoolClass();
     }
 
     public void setPupilGrades(ArrayList<Grade> pupilGrades) {
@@ -45,35 +29,4 @@ public class Pupil {
         this.pupilClass = pupilClass;
     }
 
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
-    public String getMail() {
-        return mail;
-    }
-
-    public void setMail(String mail) {
-        this.mail = mail;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public char getSex() {
-        return sex;
-    }
-
-    public void setSex(char sex) {
-        this.sex = sex;
-    }
 }

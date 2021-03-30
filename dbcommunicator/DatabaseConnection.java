@@ -20,31 +20,26 @@ public final class DatabaseConnection {
         this.password = password;
     }
 
-    public static DatabaseConnection getInstance(String url, String username, String password)
-    {
+    public static DatabaseConnection getInstance(String url, String username, String password) {
 
-        if(instance == null)
-        {
+        if (instance == null) {
             Connection connection = null;
             try {
                 Class.forName("org.postgresql.Driver");
                 connection = DriverManager.getConnection(url, username, password);
 
-            } catch(ClassNotFoundException e)
-            {
+            } catch (ClassNotFoundException e) {
                 System.out.println("Cannot load specified class!");
-            }
-            catch(SQLException e)
-            {
+            } catch (SQLException e) {
                 System.out.println("Looks like something is wrong with the database specified");
             }
 
-            instance = new DatabaseConnection(connection,username,password);
+            instance = new DatabaseConnection(connection, username, password);
         }
         return instance;
     }
 
-    public static DatabaseConnection getInstance(){
+    public static DatabaseConnection getInstance() {
         return instance;
     }
 
@@ -78,12 +73,9 @@ public final class DatabaseConnection {
             Class.forName("org.postgresql.Driver");
             Connection conn = DriverManager.getConnection(url, username, password);
             return conn;
-        } catch(ClassNotFoundException e)
-        {
+        } catch (ClassNotFoundException e) {
             System.out.println("Cannot load specified class!");
-        }
-        catch(SQLException e)
-        {
+        } catch (SQLException e) {
             System.out.println("Looks like something is wrong with the database specified");
         }
         return null;
