@@ -38,4 +38,8 @@ public class SchoolClass {
     public void setNumberOfPupils(int numberOfPupils) {
         this.numberOfPupils = numberOfPupils;
     }
+
+    public void printClass() {
+        System.out.println("[ " + this.number + this.letter + " ]");
+    }
 }

@@ -14,4 +14,9 @@ public class Subject {
     public void setSubjectName(String subjectName) {
         this.subjectName = subjectName;
     }
+
+    public void printSubject()
+    {
+        System.out.println(this.subjectName);
+    }
 }

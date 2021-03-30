@@ -37,4 +37,13 @@ public class Teacher extends Person {
     public void setQualification(String qualification) {
         this.qualification = qualification;
     }
+
+    public void printTeacher() {
+        super.printPerson();
+        System.out.println("Имеет: " + qualification + " квалификацию");
+        System.out.print("Ведёт предметы: ");
+        for(Subject teachingSubject: this.getSubjects())
+            System.out.print(teachingSubject.getSubjectName() + " ");
+        System.out.println();
+    }
 }

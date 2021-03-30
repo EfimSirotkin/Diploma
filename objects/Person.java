@@ -46,4 +46,8 @@ public class Person {
     public void setSex(char sex) {
         this.sex = sex;
     }
+
+    public void printPerson() {
+        System.out.println(this.getFullName() + " " + this.getMail() + " " + this.getAge() + " " + this.getSex());
+    }
 }

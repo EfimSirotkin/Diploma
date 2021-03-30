@@ -29,4 +29,13 @@ public class Pupil extends Person{
         this.pupilClass = pupilClass;
     }
 
+    public void printPupil()
+    {
+        super.printPerson();
+        System.out.println("Учится в: " + + this.getPupilClass().getNumber() + " " + this.getPupilClass().getLetter());
+        System.out.print("Оценки: ");
+        for(Grade grade : this.getPupilGrades())
+            System.out.print(" " + grade.getValue() + "[" + grade.getDateTime() + "]");
+        System.out.println();
+    }
 }
