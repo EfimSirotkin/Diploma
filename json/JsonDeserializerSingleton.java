@@ -23,6 +23,7 @@ public final class JsonDeserializerSingleton {
         return instance;
     }
 
+
     public ArrayList<Grade> deserializeGrades(String jsonSerializedGrades) {
         Type type = new TypeToken<ArrayList<Grade>>(){}.getType();
         ArrayList<Grade> dsGrades = gsonDeserializer.fromJson(jsonSerializedGrades, type);

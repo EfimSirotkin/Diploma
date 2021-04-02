@@ -24,7 +24,6 @@ CREATE TABLE public.classes
 
     public static ArrayList<SchoolClass> retrieveClasses() throws SQLException {
         ArrayList<SchoolClass> classes = new ArrayList<SchoolClass>(5);
-        DatabaseConnection databaseConnection = DatabaseConnection.getInstance();
         Statement stmt = DatabaseConnection.getInstance().getConnection().createStatement();
         String query = DatabaseManipulator.generateSelectStatement("classes", "*");
         ResultSet rs = stmt.executeQuery(query);
@@ -49,7 +48,6 @@ CREATE TABLE public.classes
     public static ArrayList<Subject> retrieveSubjects() throws SQLException {
         ArrayList<Subject> subjects = new ArrayList<Subject>(5);
         try {
-            DatabaseConnection databaseConnection = DatabaseConnection.getInstance();
             Statement stmt = DatabaseConnection.getInstance().getConnection().createStatement();
             String query = DatabaseManipulator.generateSelectStatement("subjects", "subject_name");
             ResultSet rs = stmt.executeQuery(query);
@@ -79,7 +77,6 @@ CREATE TABLE public.classes
 
     public static ArrayList<Teacher> retrieveTeachers() throws SQLException {
         ArrayList<Teacher> teachers = new ArrayList<Teacher>(5);
-        DatabaseConnection databaseConnection = DatabaseConnection.getInstance();
         Statement stmt = DatabaseConnection.getInstance().getConnection().createStatement();
         Statement subjectsQuerystmt = DatabaseConnection.getInstance().getConnection().createStatement();
         try {

@@ -1,7 +1,5 @@
 package sample;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import sample.dbcommunicator.DatabaseConnection;
@@ -11,7 +9,6 @@ import sample.json.JsonSerializerSingleton;
 import sample.objects.*;
 
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 public class Main extends Application {
@@ -48,6 +45,7 @@ public class Main extends Application {
         String serializedClasses = serializerSingleton.serializeSchoolClasses(schoolClass);
         for(SchoolClass oneClass : deserializerSingleton.deserializeSchoolClasses(serializedClasses))
             oneClass.printClass();
+        ;
 
         String serializedSubjects = serializerSingleton.serializeSchoolSubjects(schoolSubjects);
         for(Subject oneSubject : deserializerSingleton.deserializeSchoolSubjects(serializedSubjects))
@@ -61,7 +59,6 @@ public class Main extends Application {
         for(Teacher oneTeacher : deserializerSingleton.deserializeTeachers(serializedTeachers))
             oneTeacher.printTeacher();
 
-        //ArrayList<Subject> schoolSubjectsDeserialized = gson.fromJson(jsonSerialized, Subject.class);
     }
 
 
