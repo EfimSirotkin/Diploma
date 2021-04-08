@@ -96,10 +96,9 @@ CREATE TABLE public.classes
                 teachers.add(new Teacher(rs.getString("full_name"),
                         rs.getString("mail"),
                         rs.getInt("age"),
-                        (char)rs.getInt("sex"),
+                        rs.getInt("sex"),
                         rs.getString("qualification"),
                         teacherSubjects));
-
             }
         } catch (SQLException e) {
             System.out.println("Looks like something is wrong in teacher's retrieval");
@@ -169,7 +168,7 @@ CREATE TABLE public.classes
                 pupils.add(new Pupil(pupilsResultSet.getString("full_name"),
                         pupilsResultSet.getString("mail"),
                         pupilsResultSet.getInt("age"),
-                        (char) pupilsResultSet.getInt("sex"),
+                        pupilsResultSet.getInt("sex"),
                         pupilGrades,
                         schoolClass));
 

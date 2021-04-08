@@ -9,12 +9,12 @@ public class Teacher extends Person {
     private ArrayList<Subject> subjects;
 
 
-    public Teacher(String fullName, String mail, int age, char sex, String qualification) {
+    public Teacher(String fullName, String mail, int age, int sex, String qualification) {
         super(fullName,mail,age,sex);
         this.qualification = qualification;
     }
 
-    public Teacher(String fullName, String mail, int age, char sex, String qualification, ArrayList<Subject> subjects) {
+    public Teacher(String fullName, String mail, int age, int sex, String qualification, ArrayList<Subject> subjects) {
         super(fullName,mail,age,sex);
         this.qualification = qualification;
         this.subjects = subjects;

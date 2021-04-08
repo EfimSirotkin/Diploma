@@ -7,7 +7,7 @@ public class Pupil extends Person{
     private ArrayList<Grade> pupilGrades;
     private SchoolClass pupilClass;
 
-    public Pupil(String fullName, String mail, int age, char sex, ArrayList<Grade> pupilGrades, SchoolClass pupilClass) {
+    public Pupil(String fullName, String mail, int age, int sex, ArrayList<Grade> pupilGrades, SchoolClass pupilClass) {
         super(fullName,mail,age,sex);
         this.pupilGrades = pupilGrades;
         this.pupilClass = pupilClass;

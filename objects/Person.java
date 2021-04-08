@@ -5,10 +5,10 @@ public class Person {
     private String fullName;
     private String mail;
     private int age;
-    private char sex;
+    private int sex;
 
 
-    public Person(String fullName, String mail, int age, char sex) {
+    public Person(String fullName, String mail, int age, int sex) {
         this.fullName = fullName;
         this.mail = mail;
         this.age = age;
@@ -39,11 +39,11 @@ public class Person {
         this.age = age;
     }
 
-    public char getSex() {
+    public int getSex() {
         return sex;
     }
 
-    public void setSex(char sex) {
+    public void setSex(int sex) {
         this.sex = sex;
     }
 
