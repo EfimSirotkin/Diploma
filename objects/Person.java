@@ -6,13 +6,23 @@ public class Person {
     private String mail;
     private int age;
     private int sex;
+    private int id;
 
 
-    public Person(String fullName, String mail, int age, int sex) {
+    public Person(int id, String fullName, String mail, int age, int sex) {
         this.fullName = fullName;
         this.mail = mail;
         this.age = age;
         this.sex = sex;
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getFullName() {
@@ -48,6 +58,7 @@ public class Person {
     }
 
     public void printPerson() {
-        System.out.println(this.getFullName() + " " + this.getMail() + " " + this.getAge() + " " + this.getSex());
+        System.out.println("id: " + this.getId() + " " + this.getFullName() + " " + this.getMail() + " " + this.getAge() + " " + this.getSex());
+
     }
 }

@@ -26,7 +26,7 @@ public final class DatabaseManipulator {
     }
 
     public static String generateSubjectRetrievalQuery(int teacherID) throws SQLException {
-        String query = "SELECT subjects.subject_name FROM teachers " +
+        String query = "SELECT subjects.subject_name, subjects.subject_id FROM teachers " +
                 "LEFT JOIN teach_subject ON teachers.teacher_id = teach_subject.teacher_id " +
                 "LEFT JOIN subjects ON teach_subject.subject_id = subjects.subject_id " +
                 "WHERE teachers.teacher_id = " + teacherID + ";";

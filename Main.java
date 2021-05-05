@@ -66,11 +66,24 @@ public class Main extends Application {
 //        String serializedSubjects = serializerSingleton.serializeSchoolSubjects(schoolSubjects);
 //        for(Subject oneSubject : deserializerSingleton.deserializeSchoolSubjects(serializedSubjects))
 //            oneSubject.printSubject();
+
+        for(Pupil onePupil : pupils)
+            onePupil.printPupil();
+
 //
         String serializedPupils = serializerSingleton.serializePupils(pupils);
         for(Pupil onePupil : deserializerSingleton.deserializePupils(serializedPupils))
             onePupil.printPupil();
 
+        for(Teacher oneTeacher : schoolTeachers)
+            oneTeacher.printTeacher();
+
+        for(Subject oneSubject: schoolSubjects)
+            oneSubject.printSubject();
+
+
+
+        ArrayList<Pupil> pupils = deserializerSingleton.deserializePupils(serializedPupils);
 //        String serializedTeachers = serializerSingleton.serializeTeachers(schoolTeachers);
 //        for(Teacher oneTeacher : deserializerSingleton.deserializeTeachers(serializedTeachers))
 //            oneTeacher.printTeacher();

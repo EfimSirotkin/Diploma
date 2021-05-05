@@ -28,7 +28,9 @@ CREATE TABLE public.classes
         String query = DatabaseManipulator.generateSelectStatement("classes", "*");
         ResultSet rs = stmt.executeQuery(query);
         while (rs.next()) {
-            classes.add(new SchoolClass(rs.getInt("class_number"),
+            classes.add(new SchoolClass(
+                    rs.getInt("class_id"),
+                    rs.getInt("class_number"),
                     rs.getString("class_letter"),
                     rs.getInt("number_of_pupils")));
         }
@@ -49,11 +51,13 @@ CREATE TABLE public.classes
         ArrayList<Subject> subjects = new ArrayList<Subject>(5);
         try {
             Statement stmt = DatabaseConnection.getInstance().getConnection().createStatement();
-            String query = DatabaseManipulator.generateSelectStatement("subjects", "subject_name");
+            String query = DatabaseManipulator.generateSelectStatement("subjects", "*");
             ResultSet rs = stmt.executeQuery(query);
 
             while (rs.next()) {
-                subjects.add(new Subject(rs.getString("subject_name")));
+                subjects.add(new Subject(
+                        rs.getInt("subject_id"),
+                        rs.getString("subject_name")));
             }
         } catch (SQLException e) {
             System.out.println("Looks like something is wrong with the select in the subject's retrieval");
@@ -87,13 +91,19 @@ CREATE TABLE public.classes
                 ArrayList<Subject> teacherSubjects = new ArrayList<>(5);
 
                 int teacher_id = rs.getInt("teacher_id");
+
                 String subjectQuery = DatabaseManipulator.generateSubjectRetrievalQuery(teacher_id);
                 ResultSet subjectQueryRS = subjectsQuerystmt.executeQuery(subjectQuery);
+
                 while (subjectQueryRS.next()) {
-                    teacherSubjects.add(new Subject(subjectQueryRS.getString("subject_name")));
+                    teacherSubjects.add(new Subject(
+                            subjectQueryRS.getInt("subject_id"),
+                            subjectQueryRS.getString("subject_name")));
                 }
 
-                teachers.add(new Teacher(rs.getString("full_name"),
+                teachers.add(new Teacher(
+                        rs.getInt("teacher_id"),
+                        rs.getString("full_name"),
                         rs.getString("mail"),
                         rs.getInt("age"),
                         rs.getInt("sex"),
@@ -150,7 +160,9 @@ CREATE TABLE public.classes
 
                 while (pupilGradesRS.next()) {
                     pupilGrades.add(new Grade(pupilGradesRS.getString("datetime_id"),
-                            pupilGradesRS.getInt("grade_value")));
+                            pupilGradesRS.getInt("grade_value"),
+                            pupilGradesRS.getInt("pupil_id"),
+                            pupilGradesRS.getInt("subject_id")));
                 }
 
 
@@ -160,17 +172,22 @@ CREATE TABLE public.classes
                 ResultSet pupilClassRS = pupilClassStmt.executeQuery(pupilClassQuery);
                 SchoolClass schoolClass = null;
                 while (pupilClassRS.next()) {
-                    schoolClass = new SchoolClass(pupilClassRS.getInt("class_number"),
+                    schoolClass = new SchoolClass(
+                            pupilClassRS.getInt("class_id"),
+                            pupilClassRS.getInt("class_number"),
                             pupilClassRS.getString("class_letter"),
                             pupilClassRS.getInt("number_of_pupils"));
                 }
 
-                pupils.add(new Pupil(pupilsResultSet.getString("full_name"),
+                pupils.add(new Pupil(
+                        pupilsResultSet.getInt("pupil_id"),
+                        pupilsResultSet.getString("full_name"),
                         pupilsResultSet.getString("mail"),
                         pupilsResultSet.getInt("age"),
                         pupilsResultSet.getInt("sex"),
                         pupilGrades,
-                        schoolClass));
+                        schoolClass,
+                        pupilsResultSet.getInt("teacher_id")));
 
             }
         } catch (SQLException e) {

@@ -1,6 +1,7 @@
 package sample.objects;
 
 public class SchoolClass {
+    private int id;
     private int number;
     private String letter;
     private int numberOfPupils;
@@ -9,10 +10,19 @@ public class SchoolClass {
     public SchoolClass() {
     }
 
-    public SchoolClass(int class_number, String class_letter, int number_of_pupils) {
+    public SchoolClass(int id, int class_number, String class_letter, int number_of_pupils) {
+        this.id = id;
         this.number = class_number;
         this.letter = class_letter;
         this.numberOfPupils = number_of_pupils;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getNumber() {

@@ -13,6 +13,7 @@ public final class HttpServerSingleton {
     private static HttpServer server;
 
     private HttpServerSingleton() {
+
     }
 
     public static HttpServerSingleton getInstance() {

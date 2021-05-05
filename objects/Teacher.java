@@ -9,13 +9,13 @@ public class Teacher extends Person {
     private ArrayList<Subject> subjects;
 
 
-    public Teacher(String fullName, String mail, int age, int sex, String qualification) {
-        super(fullName,mail,age,sex);
+    public Teacher(int id, String fullName, String mail, int age, int sex, String qualification) {
+        super(id,fullName,mail,age,sex);
         this.qualification = qualification;
     }
 
-    public Teacher(String fullName, String mail, int age, int sex, String qualification, ArrayList<Subject> subjects) {
-        super(fullName,mail,age,sex);
+    public Teacher(int id, String fullName, String mail, int age, int sex, String qualification, ArrayList<Subject> subjects) {
+        super(id,fullName,mail,age,sex);
         this.qualification = qualification;
         this.subjects = subjects;
     }
@@ -39,6 +39,7 @@ public class Teacher extends Person {
     }
 
     public void printTeacher() {
+        System.out.println("----------------");
         super.printPerson();
         System.out.println("Имеет: " + qualification + " квалификацию");
         System.out.print("Ведёт предметы: ");

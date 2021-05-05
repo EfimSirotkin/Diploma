@@ -2,9 +2,20 @@ package sample.objects;
 
 public class Subject {
     private String subjectName;
+    private int subjectID;
 
-    public Subject(String subjectName) {
+
+    public int getSubjectID() {
+        return subjectID;
+    }
+
+    public void setSubjectID(int subjectID) {
+        this.subjectID = subjectID;
+    }
+
+    public Subject(int subjectID, String subjectName) {
         this.subjectName = subjectName;
+        this.subjectID = subjectID;
     }
 
     public String getSubjectName() {
@@ -17,6 +28,6 @@ public class Subject {
 
     public void printSubject()
     {
-        System.out.println(this.subjectName);
+        System.out.println("id: " + this.subjectID +  " " + this.subjectName);
     }
 }
